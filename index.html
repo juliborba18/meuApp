@@ -1,98 +1,69 @@
-<!DOCTYPE html>
-<html class="no-js">
-<script type="text/javascript">
-
-tipo de script = "text/javascript"
-
- admob_vars var = {
-
-  pubid: [PUBLISHER_ID] ',/editora/id
-
-  bgcolor: 000000 ', cor/fundo/(hex)
-
-  texto: FFFFFF ',// cor da fonte-(hexagonal)
-
-  teste: Modo/test/verdadeiro, definido como false se o teste n�o-modo
-
- };
-
- / Script
-
- tipo de script = "text/javascript" src = "http://mmv.admob.com/static/android/iadmob.js" script /
- 
- </script>
+﻿<!DOCTYPE html>
+<html>
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
+	<title> Utilizando a câmera com PhoneGap </title>
+	    
+		<script src="cordova.js"></script>
+        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+        <script type="text/javascript" src="js/camera.js"></script>
+ 
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <style>
-            body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
-        </style>
-        <link rel="stylesheet" href="assets/css/bootstrap-responsive.min.css">
-        <link rel="stylesheet" href="assets/css/main.css">
-
-        <script src="assets/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css"> 
+        <link rel="stylesheet" href="css/camera.css" type="text/css">
+	    <script src="assets/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
     <body>
-
-        <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
-
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="#">Mobile app 1</a>
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#contact">Contact</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li class="nav-header">Nav header</li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li><a href="#">One more separated link</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
+	
+	<!-- Pagina Inicial (menu)  -->
+		<div data-role="page" id="home_page" data-theme="a">
+            <div data-role="header">
+                <h3>PhoneGap Camera API Sample</h3>
+                <a href="#settings_page" data-role="button" id="settings_button" data-theme="b" data-mini="true" class="ui-btn-right">Settings</a>
+            </div>
+            <div data-role="content">
+                <a href="#" data-role="button" id="open_camera_button">Capturar foto com  camera</a>
+                <a href="#" data-role="button" id="open_alb_button">Salvar a foto no Album</a>
+                
+                <div id="settings_info" class="ui-body ui-body-b info"></div>
             </div>
         </div>
+		
+		<div data-role="content">
+		
+			<form name="settings_form" id="settings_form">
+                    
+                    <div data-role="collapsible-set" data-inset="false" data-mini="true">
 
-        <div class="container">
-            
-            <div class="row">
-                <a class="btn btn-block btn-large"><i class="icon icon-search"></i>  Ver fotos</a>
-                <a class="btn btn-block btn-large"><i class="icon icon-camera"></i>  Nova foto</a>
-            </div>
-
-            <footer>
-                <p>&copy; WTFPLFTW</p>
-            </footer>
-
-        </div> <!-- /container -->
-
-        <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
-        <script>//window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-        <script src="assets/js/jquery-1.9.1.min.js"></script>'
-        <script src="assets/js/bootstrap.min.js"></script>
-        <script src="assets/js/main.js"></script>
+                        <div data-role="collapsible" data-collapsed="false">
+						<!--Salvando a foto  -->
+							<div data-role="collapsible">
+								<h3>Salvar a foto</h3>
+								<label for="encod_input" data-mini="true">Choose encoding type:</label>
+									<select id="encod_input" name="encod_input" data-mini="true">
+										<option value="0" selected="selected">JPEG</option>
+										<option value="1">PNG</option>
+									</select>
+									<label for="save_input" data-mini="true">Save picture to photo album</label>
+										<select name="save_input" id="save_input" data-role="slider" data-mini="true" data-theme="a" data-track-theme="a">
+											<option value="false">No</option>
+											<option value="true" selected="selected">Yes</option>
+										</select>
+							</div>
+							<div data-role="collapsible">
+								<h3>Picture opening options</h3>
+									<label for="media_input" data-mini="true">Choose media type:</label>
+									<select id="media_input" name="media_input" data-mini="true">
+										<option value="0" selected="selected">Pictures</option>
+										<option value="1">Videos</optio
+										<option value="2">All media</option>
+									</select>
+							</div>
+						</div>
+					</div>
+			</form>
+        </div>
     </body>
 </html>
